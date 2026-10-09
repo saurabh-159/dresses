@@ -1,26 +1,192 @@
 @import "tailwindcss";
 
+/*
+  STORE THEME
+  Change only the values in this block. Buttons, navbar, footer,
+  links, borders and the page background all follow these.
+*/
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --theme-background: #fffaf6;
+  --theme-surface: #ffffff;
+  --theme-text: #5c4a42;
+  --theme-muted: #9a877a;
+  --theme-line: #f0e4da;
+  --theme-accent: #c48a84;
+  --theme-accent-dark: #b57973;
+  --theme-highlight: #c9ae78;
+  --theme-button: #f6e6de;
+  --theme-button-hover: #edd9ce;
+  --theme-on-accent: #5c4a42;
+  --theme-deep: #f7f1ea;
+  --background: var(--theme-background);
+  --foreground: var(--theme-text);
+  --site-header-offset: 8.75rem;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-wine: var(--theme-accent);
+  --color-wine-dark: var(--theme-accent-dark);
+  --color-blush: var(--theme-button);
+  --color-blush-dark: var(--theme-button-hover);
+  --color-gold: var(--theme-highlight);
+  --color-ivory: var(--theme-on-accent);
+  --color-espresso: var(--theme-deep);
+  --color-ink: var(--theme-text);
+  --color-paper: var(--theme-background);
+  --color-white: var(--theme-surface);
+  --color-brand: var(--theme-accent);
+  --color-brand-dark: var(--theme-accent-dark);
+  --color-brand-soft: var(--theme-highlight);
+  --color-muted: var(--theme-muted);
+  --color-line: var(--theme-line);
+  --color-stone-50: var(--theme-background);
+  --color-stone-100: color-mix(in srgb, var(--theme-line) 55%, white);
+  --color-stone-200: var(--theme-line);
+  --color-stone-300: color-mix(in srgb, var(--theme-muted) 28%, var(--theme-line));
+  --color-stone-400: color-mix(in srgb, var(--theme-muted) 62%, var(--theme-line));
+  --color-stone-500: var(--theme-muted);
+  --color-stone-600: color-mix(in srgb, var(--theme-text) 35%, var(--theme-muted));
+  --color-stone-700: color-mix(in srgb, var(--theme-text) 62%, var(--theme-muted));
+  --color-stone-800: color-mix(in srgb, var(--theme-text) 55%, var(--theme-muted));
+  --color-stone-900: var(--theme-text);
+  --color-stone-950: var(--theme-text);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  box-sizing: border-box;
 }
 
 body {
+  margin: 0;
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-outfit), Arial, Helvetica, sans-serif;
+  overflow-x: clip;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+img {
+  max-width: 100%;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--theme-highlight) 35%, white);
+  color: var(--theme-text);
+}
+
+.container-aw {
+  width: 100%;
+  max-width: 1440px;
+  margin-inline: auto;
+  padding-inline: 16px;
+}
+
+@media (min-width: 640px) {
+  .container-aw {
+    padding-inline: 24px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container-aw {
+    padding-inline: 32px;
+  }
+}
+
+.brand-strip {
+  height: 3px;
+  background: var(--theme-highlight);
+}
+
+.site-header-spacer {
+  height: var(--site-header-height, var(--site-header-offset));
+}
+
+.site-header {
+  position: fixed;
+  z-index: 50;
+  inset: 0 0 auto 0;
+  background: var(--theme-surface);
+  transform: translate3d(0, var(--site-header-shift, 0px), 0);
+  transition: transform 280ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.site-header.is-compact {
+  box-shadow: 0 1px 0 var(--theme-line);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-header {
+    transition: none;
+  }
+}
+
+.focus-ring:focus-visible {
+  outline: 2px solid var(--theme-accent);
+  outline-offset: 3px;
+}
+
+.admin-theme {
+  background: var(--theme-background);
+  color: var(--theme-text);
+  color-scheme: light;
+}
+
+.admin-theme input,
+.admin-theme textarea,
+.admin-theme select {
+  color: var(--theme-text);
+  background-color: var(--theme-surface);
+}
+
+.admin-theme input::placeholder,
+.admin-theme textarea::placeholder {
+  color: var(--theme-muted);
+}
+
+.admin-theme .bg-blush,
+.admin-theme .hover\:bg-blush:hover,
+.admin-theme .hover\:bg-blush-dark:hover {
+  color: var(--theme-on-accent);
+}
+
+.card-interactive {
+  transition:
+    transform 300ms ease,
+    box-shadow 300ms ease;
+}
+
+.card-interactive:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px rgba(28, 25, 23, 0.08);
+}
+
+.no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.swipe-row,
+.swipe-row * {
+  -webkit-user-drag: none;
+  user-select: none;
 }
