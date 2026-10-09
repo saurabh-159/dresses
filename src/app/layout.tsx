@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Outfit } from "next/font/google";
+import { Suspense } from "react";
 import "./globals.css";
+import NavigationProgress from "@/components/layout/NavigationProgress";
 import { SITE_NAME, defaultSettings } from "@/lib/site";
 
 const outfit = Outfit({
@@ -25,7 +27,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={outfit.variable}>{children}</body>
+      <body className={outfit.variable}>
+        <Suspense fallback={null}>
+          <NavigationProgress />
+        </Suspense>
+        {children}
+      </body>
     </html>
   );
 }
