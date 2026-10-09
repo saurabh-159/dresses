@@ -260,8 +260,14 @@ export default function FeaturedProducts({ products }: FeaturedProductsProps) {
         ) : null}
       </div>
 
+      <div className="mt-6 grid grid-cols-2 gap-x-3 gap-y-6 px-4 md:hidden">
+        {products.map((product) => (
+          <CatalogCard key={product.id} product={product} />
+        ))}
+      </div>
+
       <div
-        className="swipe-row mt-6 cursor-grab touch-pan-y active:cursor-grabbing md:mt-8"
+        className="swipe-row mt-8 hidden cursor-grab touch-pan-y active:cursor-grabbing md:block"
         onPointerDown={onPointerDown}
         onPointerMove={onPointerMove}
         onPointerUp={endDrag}
@@ -289,7 +295,7 @@ export default function FeaturedProducts({ products }: FeaturedProductsProps) {
             <CatalogCard
               key={`${product.copy}-${product.id}-${slideIndex}`}
               product={product}
-              className="w-[78vw] max-w-[280px] shrink-0 sm:w-[270px] sm:max-w-none lg:w-[300px]"
+              className="w-[240px] shrink-0 sm:w-[270px] lg:w-[300px]"
             />
           ))}
         </div>

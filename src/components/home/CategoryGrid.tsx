@@ -43,7 +43,6 @@ export default function CategoryGrid({ categories }: CategoryGridProps) {
     blockDrag?: (event: Event) => void;
   }>({ active: false, startX: 0, delta: 0, captured: false });
   const suppressClick = useRef(false);
-  const hovering = useRef(false);
 
   const loopItems = useMemo(() => loopCategories(categories), [categories]);
   const loopLength = loopItems.length;
@@ -192,6 +191,7 @@ export default function CategoryGrid({ categories }: CategoryGridProps) {
     const node = event.currentTarget;
     const blockDrag = (dragEvent: Event) => dragEvent.preventDefault();
     node.addEventListener("dragstart", blockDrag, true);
+    setPaused(true);
     dragRef.current = {
       active: true,
       startX: event.clientX,
@@ -233,7 +233,7 @@ export default function CategoryGrid({ categories }: CategoryGridProps) {
     if (blockDrag) event.currentTarget.removeEventListener("dragstart", blockDrag, true);
     setDragging(false);
     setDragX(0);
-    setPaused(hovering.current);
+    setPaused(false);
     if (event.currentTarget.hasPointerCapture(event.pointerId)) {
       event.currentTarget.releasePointerCapture(event.pointerId);
     }
@@ -259,15 +259,6 @@ export default function CategoryGrid({ categories }: CategoryGridProps) {
       className="overflow-hidden py-10 md:py-16 lg:py-20"
       aria-roledescription="carousel"
       aria-label="Shop by category"
-      onMouseEnter={() => {
-        if (window.matchMedia("(hover: none)").matches) return;
-        hovering.current = true;
-        setPaused(true);
-      }}
-      onMouseLeave={() => {
-        hovering.current = false;
-        if (!dragRef.current.active) setPaused(false);
-      }}
     >
       <div className="flex items-end justify-between gap-4 px-4 md:gap-8 md:px-5 lg:px-6">
         <div className="min-w-0">
